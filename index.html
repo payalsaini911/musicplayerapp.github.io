@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-10/css/all.min.css" 
+    integrity="sha512-Pv1WJMqAtVgNNct5vhq+4cgkKinKpV1jCwSWD4am9CjwxsJSCkLWKcE/ZBqHnEE1mHs01c8B0GMvcn/pQ/yrog==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="music.css">
+    </head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">Tum hi aana</h2>
+            <h3 id="artist">payal dev</h3>
+            <div class="img_container">
+                <img src="image-1/image.jpg" alt="">
+            </div>
+            <audio src="music-1/music1.mp3"></audio>
+            <div class="music_cantrols">
+                <i class="fas fa-backward" id="prev" title="previous"></i>
+                <i class="fas fa-play main_button" id="play" title="Play"></i>
+                <i class="fas fa-forward" id="next" title="Next"></i>
+            </div>
+        </div>
+    </div>
+    <script>
+        const music=document.querySelector('audio');
+        const img=document.querySelector('img');
+        const play=document.getElementById('play');
+        const title=document.getElementById('title');
+        const artist=document.getElementById('artist');
+        const prev=document.getElementById('prev');
+        const next=document.getElementById('next');
+        
+          
+        const songs=[
+            {
+            name:"ms1",
+            title:"Tum hi aana",
+            artist:"payal dev",
+        },
+        {
+           name:"ms2",
+            title:"Baby",
+            artist:"Justin Bieber",
+        },
+        {
+           name:"ms3",
+            title:"Thoda Thoda Pyaar Hua Tumse",
+            artist:"payal dev",
+        },
+        {
+           name:"ms4",
+            title:"Pretty Girl (Maggie Lindemann) ",
+            artist:"DJ Sree",
+        },
+    ];
+         
+        let isplay=false;
+         const playmusic=()=>{
+            isplay=true;
+            music.play();
+            play.classList.replace('fa-play','fa-pause');
+             img.classList.add("animi");
+         };
+
+         const pausemusic=()=>{
+            isplay=false;
+            music.pause();
+            play.classList.replace('fa-pause','fa-play');
+             img.classList.remove("animi");
+         };
+
+         play.addEventListener('click',()=>{
+             if(isplay)
+                pausemusic();
+             else
+             playmusic();
+         });
+        
+         const loadSong=(songs)=>{
+             title.textContent=songs.title;
+             artist.textContent=songs.artist;
+             music.src="music-1/"+songs.name+".mp3";
+             img.src="image-1/"+songs.name+".jpg";
+         } ;
+         let songInx=0;
+       loadSong(songs[0]);
+        const nextSong=()=>{
+            songInx=(songInx+1)%songs.length;
+            loadSong(songs[songInx]); 
+            playmusic(); 
+        };
+        const prevSong=()=>{
+            songInx=(songInx-1+songs.length)%songs.length;
+            loadSong(songs[songInx]); 
+            playmusic(); 
+        };
+        next.addEventListener("click",nextSong);
+        prev.addEventListener("click",prevSong);
+    </script>
+</body>
+</html>
